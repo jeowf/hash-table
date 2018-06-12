@@ -1,22 +1,38 @@
 #include "../include/hash-tbl.h"
 #include "../include/account.h"
 #include "../include/hash-entry.h"
+
 #include <iostream>
+#include <utility>
+#include <tuple>
 
 struct KeyHash {
 	std::size_t operator()( const client::Account::AcctKey & k_ ) const{
-        return std::hash <int>()( k_ ) ;
+        //return std::hash <int>()( k_ ) ; // versão 1
+        //return std::hash < std::string >() ( k_.first ) xor std::hash < int >()( k_.second ); versão 2
+        return std::hash < std::string >() ( std::get<0>(k_) ) xor 
+        	   std::hash < int >()( std::get<1>(k_) ) xor
+        	   std::hash < int >()( std::get<2>(k_) ) xor
+        	   std::hash < int >()( std::get<3>(k_) );
     }
 };
 
 struct KeyEqual {
     std::size_t operator()( const client::Account::AcctKey & lhs_ , const client::Account::AcctKey & rhs_ ) const{
-        return lhs_ == rhs_ ;
+        //return lhs_ == rhs_ ; // versão 1
+        //return lhs_.first == rhs_.first and lhs_.second == rhs_.second ; // versão 2
+    	
+    	//versão 3
+    	return std::get<0>(lhs_) == std::get<0>(rhs_) and 
+    	std::get<1>(lhs_) == std::get<1>(rhs_) and
+    	std::get<2>(lhs_) == std::get<2>(rhs_) and
+    	std::get<3>(lhs_) == std::get<3>(rhs_);
+
     }
 };
 
 int main(){
-	hash::HashTbl<int, client::Account, KeyHash, KeyEqual> bank_table;
+	hash::HashTbl<client::Account::AcctKey, client::Account, KeyHash, KeyEqual> bank_table;
 	const unsigned long int a =  bank_table.size();
 	std::cout << a << std::endl;
 
@@ -59,7 +75,7 @@ int main(){
 	std::cout << std::endl;
 
 	std::cout << ">>> Redimensionando a tabela <<< \n";
-	hash::HashTbl<int, client::Account, KeyHash, KeyEqual> bank_table2(5);
+	hash::HashTbl<client::Account::AcctKey, client::Account, KeyHash, KeyEqual> bank_table2(5);
 
 	client::Account c_conta_1 = { "Glen Glen   ",    1, 3404, 29157, 3578.99 };
 	client::Account c_conta_2 = { "Gegeo       ",    7, 6512, 54982, 8895.89 };
