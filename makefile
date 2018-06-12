@@ -20,4 +20,4 @@ $(BUILD_PATH)/%.o: $(SRC_PATH)/%.$(SRC_EXT)
 
 clean:
 	rm -f $(BIN_DIR)*.o $(PROG) *.o
-rm -r $(BIN_DIR)
+	rm -r $(BIN_DIR)

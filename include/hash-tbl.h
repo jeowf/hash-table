@@ -2,12 +2,22 @@
 #define _HASH_TBL_
 
 // includes
+#include <forward_list>
+#include <iostream>
+#include <cmath>
+
+#include "hash-entry.h"
 
 namespace hash{
-    template < typename KeyType, typename DataType >
+
+    template<typename KeyType, 
+             typename DataType, 
+             typename KeyHash = std::hash<KeyType>,
+             typename KeyEqual = std::equal_to<KeyType>>
+
     class HashTbl {
     public:
-        using Entry = Hash < KeyType, DataType >; //!< Alias
+        using Entry = HashEntry< KeyType, DataType >; //!< Alias
 
         HashTbl (size_t tbl_size = DEFAULT_SIZE);
 
@@ -21,6 +31,8 @@ namespace hash{
 
         unsigned long int count (void) const;
         void print () const;
+        bool prime(size_t);
+        size_t nextPrime( size_t );
 
     private:
         void rehash();
