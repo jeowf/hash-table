@@ -21,18 +21,6 @@ namespace client{
             return (AcctKey) account_n;
         }
     };
-
-    struct KeyHash {
-        std::size_t operator()( const Account::AcctKey & k_ ) const{
-            return std::hash <int>()( k_ ) ;
-        }
-    };
-
-        struct KeyEqual {
-        std::size_t operator()( const Account::AcctKey & lhs_ , const Account::AcctKey & rhs_ ) const{
-            return lhs_ == rhs_ ;
-        }
-    };
 }
 
 #endif
