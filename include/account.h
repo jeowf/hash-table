@@ -13,26 +13,26 @@ namespace client{
         int account_n;//!< Stores the number of account.
         float money;//!< Stores the money i account.
 
-            /**
-             * @brief  Account Constructor
-             *
-             * @param  n   name
-             * @param  b   bank code
-             * @param  ag  agency
-             * @param  ac  account number
-             * @param  m   money
-             *
-             */
+        /**
+         * @brief  Account Constructor
+         *
+         * @param  n   name
+         * @param  b   bank code
+         * @param  ag  agency
+         * @param  ac  account number
+         * @param  m   money
+         *
+         */
         Account (std::string n, int b, int ag, int ac, float m )  :
             name(n), bank_cod(b), agency_n(ag), account_n(ac), money(m)
             { /* Empty */ }
 
 
-             /**
-             * @brief  get unique key in account
-             *
-             * @return Return the key
-             */
+         /**
+         * @brief  get unique key in account
+         *
+         * @return Return the key
+         */
         int get_key(){
             return (AcctKey) account_n;
         }
