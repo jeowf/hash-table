@@ -2,10 +2,14 @@
 #define _ACCOUNT_
 
 #include <string>
+#include <tuple>
+#include <utility>
 
 namespace client{
     struct Account {
-        using AcctKey = int; //!< alias.
+        //using AcctKey = int;                                  //versão 1
+        //using AcctKey = std::pair<std::string, int>;          //versão 2
+        using AcctKey = std::tuple<std::string, int, int, int>; //versão 3
 
         std::string name;//!< Stores the name in account.
         int bank_cod;//!< Stores the bank code in account.
@@ -33,8 +37,10 @@ namespace client{
          *
          * @return Return the key
          */
-        int get_key(){
-            return (AcctKey) account_n;
+        AcctKey get_key(){
+            // return (AcctKey) account_n;                          //versão 1
+            // return std::make_pair( name, account_n );            //versão 2
+            return std::make_tuple(name, bank_cod, agency_n, account_n); //versão 3
         }
     };
 }
